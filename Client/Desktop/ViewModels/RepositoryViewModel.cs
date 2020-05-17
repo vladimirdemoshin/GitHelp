@@ -1,4 +1,9 @@
-﻿using ReactiveUI;
+﻿using Desktop.Models.Core;
+using Domain.Core;
+using ReactiveUI;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reactive.Linq;
 
 namespace Desktop.ViewModels
 {
@@ -7,9 +12,14 @@ namespace Desktop.ViewModels
         public IScreen HostScreen { get; }
         public string UrlPathSegment => throw new System.NotImplementedException();
 
-        public RepositoryViewModel(IScreen screen)
+        public ObservableCollection<BranchModel> LocalBranches { get; protected set; }
+
+        public RepositoryViewModel(IScreen screen, Repository repository)
         {
             HostScreen = screen;
+
+            var branchModelCollection = repository.LocalBranches.Select(x => new BranchModel { Name = x.Name });
+            LocalBranches = new ObservableCollection<BranchModel>(branchModelCollection);
         }
     }
 }
