@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Domain.Core
+namespace Domain.Data
 {
     public class Repository
     {

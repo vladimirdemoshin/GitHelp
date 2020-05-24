@@ -1,5 +1,5 @@
 ﻿using Desktop.Models.Core;
-using Domain.Core;
+using Domain.Data;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Linq;

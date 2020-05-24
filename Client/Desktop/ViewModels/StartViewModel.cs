@@ -1,4 +1,4 @@
-﻿using Domain.Core;
+﻿using Domain.Data;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Reactive;
