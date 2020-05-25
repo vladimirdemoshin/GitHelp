@@ -4,7 +4,11 @@ using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Desktop.ViewModels;
 using Desktop.Views;
+using Domain.API;
+using Infrastructure;
 using ReactiveUI;
+using Splat;
+using Unity;
 
 namespace Desktop.Windows
 {
@@ -25,7 +29,9 @@ namespace Desktop.Windows
             this.WhenActivated(disposables => {
                 _startView = this.FindControl<StartView>("StartView");
                 var mainWindowViewModel = DataContext as MainWindowViewModel;
+                var gitFacade = IoC.Container.Resolve<IGitFacade>();
                 var startViewModel = new StartViewModel(mainWindowViewModel);
+                startViewModel.GitFacade = gitFacade;
                 _startView.DataContext = startViewModel;
             });
             AvaloniaXamlLoader.Load(this);

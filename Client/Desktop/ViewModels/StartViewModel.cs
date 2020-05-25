@@ -1,4 +1,6 @@
-﻿using Domain.Data;
+﻿using Domain.API;
+using Domain.Configuration;
+using Domain.Data;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Reactive;
@@ -12,29 +14,15 @@ namespace Desktop.ViewModels
 
         public ReactiveCommand<Unit, IRoutableViewModel> OpenRepositoryCommand { get; protected set; }
 
+        public IGitFacade GitFacade { get; set; }
+
         public StartViewModel(IScreen screen)
         {
             HostScreen = screen;
 
-            var testRepository = _getTestRepository();
-
             OpenRepositoryCommand = ReactiveCommand.CreateFromObservable(
-                () => HostScreen.Router.Navigate.Execute(new RepositoryViewModel(HostScreen, testRepository))
+                () => HostScreen.Router.Navigate.Execute(new RepositoryViewModel(HostScreen, GitFacade.GetRepository(new GitParameters())))
             );
-        }
-
-        private Repository _getTestRepository()
-        {
-            var masterBranch = new Branch("master");
-            var devBranch = new Branch("dev");
-
-            var localBranches = new List<Branch> {
-                masterBranch,
-                devBranch
-            };
-
-            var repository = new Repository(localBranches);
-            return repository;
         }
     }
 }
