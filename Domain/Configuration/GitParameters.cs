@@ -2,5 +2,6 @@
 {
     public class GitParameters
     {
+        public string RepositoryPath { get; set; }
     }
 }

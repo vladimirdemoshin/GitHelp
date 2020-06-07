@@ -14,7 +14,7 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <Grid Grid.Row="0" Background="Red">
-      <TextBlock>Menu</TextBlock>
+      <TextBlock Text="{Binding MenuTitle}">Menu</TextBlock>
     </Grid>
     <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}">
       <rxui:RoutedViewHost.DefaultContent>

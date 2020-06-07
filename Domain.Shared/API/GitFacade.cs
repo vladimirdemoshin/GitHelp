@@ -9,21 +9,26 @@ namespace Domain.Shared.API
     {
         public Repository GetRepository(GitParameters gitParameters)
         {
-            return _getTestRepository();
-        }
+            using (var libGitRepository = new LibGit2Sharp.Repository(gitParameters.RepositoryPath))
+            {
+                var localBranches = new List<Branch>();
+                foreach(var branch in libGitRepository.Branches)
+                {
+                    var commits = new List<Commit>();
+                    foreach (var commit in branch.Commits)
+                    {
+                        var commitModel = new Commit(commit.Message);
+                        commits.Add(commitModel);
+                    }
 
-        private Repository _getTestRepository()
-        {
-            var masterBranch = new Branch("master");
-            var devBranch = new Branch("dev");
+                    var branchModel = new Branch(branch.FriendlyName, commits);
+                    localBranches.Add(branchModel);
+                }
 
-            var localBranches = new List<Branch> {
-                masterBranch,
-                devBranch
-            };
+                var repository = new Repository(localBranches);
 
-            var repository = new Repository(localBranches);
-            return repository;
+                return repository;
+            } 
         }
     }
 }

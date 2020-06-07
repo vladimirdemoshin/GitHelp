@@ -1,4 +1,4 @@
-﻿namespace Desktop.Models.Core
+﻿namespace Desktop.Models.Data
 {
     public class BranchModel
     {

@@ -20,8 +20,9 @@ namespace Desktop.ViewModels
         {
             HostScreen = screen;
 
+            var repositoryPath = @"C:\Users\Vladimir\source\repos\GitHelp";
             OpenRepositoryCommand = ReactiveCommand.CreateFromObservable(
-                () => HostScreen.Router.Navigate.Execute(new RepositoryViewModel(HostScreen, GitFacade.GetRepository(new GitParameters())))
+                () => HostScreen.Router.Navigate.Execute(new RepositoryViewModel(HostScreen, GitFacade.GetRepository(new GitParameters { RepositoryPath = repositoryPath })))
             );
         }
     }

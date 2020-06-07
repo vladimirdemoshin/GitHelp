@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Domain.Data
 {
@@ -7,9 +8,12 @@ namespace Domain.Data
         public string Name { get; protected set; }
         public IEnumerable<Commit> Commits { get; protected set; }
 
-        public Branch(string name)
+        public Guid? Guid { get; set; }
+
+        public Branch(string name, IEnumerable<Commit> commits)
         {
             Name = name;
+            Commits = commits;
         }
     }
 }
