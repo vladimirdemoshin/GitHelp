@@ -9,7 +9,6 @@ namespace Desktop.ViewModels
 
         public MainWindowViewModel()
         {
-            MenuTitle = "GitHelp";
         }
     }
 }

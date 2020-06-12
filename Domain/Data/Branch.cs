@@ -5,15 +5,10 @@ namespace Domain.Data
 {
     public class Branch
     {
-        public string Name { get; protected set; }
-        public IEnumerable<Commit> Commits { get; protected set; }
+        public string Name { get; set; }
+        public bool IsRemote { get; set; }
+        public IEnumerable<Commit> Commits { get; set; }
 
         public Guid? Guid { get; set; }
-
-        public Branch(string name, IEnumerable<Commit> commits)
-        {
-            Name = name;
-            Commits = commits;
-        }
     }
 }

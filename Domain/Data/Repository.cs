@@ -4,7 +4,7 @@ namespace Domain.Data
 {
     public class Repository
     {
-        public IEnumerable<Branch> LocalBranches { get; protected set; }
+        public IEnumerable<Branch> Branches { get; protected set; }
         public IEnumerable<Repository> RemoteRepositories { get; protected set; }
 
         public Repository()
@@ -13,7 +13,7 @@ namespace Domain.Data
         }
         public Repository(IEnumerable<Branch> localBranches)
         {
-            LocalBranches = localBranches;
+            Branches = localBranches;
         }
     }
 }

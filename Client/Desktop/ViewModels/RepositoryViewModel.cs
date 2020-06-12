@@ -12,21 +12,40 @@ namespace Desktop.ViewModels
         public IScreen HostScreen { get; }
         public string UrlPathSegment => throw new System.NotImplementedException();
 
+        public CommitModel SelectedCommit { get; protected set; }
+
         public ObservableCollection<BranchModel> LocalBranches { get; protected set; }
+        public ObservableCollection<BranchModel> RemoteBranches { get; protected set; }
+
         public ObservableCollection<CommitModel> CurrentBranchCommits { get; protected set; }
 
         public RepositoryViewModel(IScreen screen, Repository repository)
         {
             HostScreen = screen;
 
-            LocalBranches = new ObservableCollection<BranchModel>();
-
-            var branchModelCollection = repository.LocalBranches.Select(x => new BranchModel { Name = x.Name });
+            var branchModelCollection = repository
+                .Branches
+                .Where(x => !x.IsRemote)
+                .Select(x => new BranchModel { Name = x.Name });
             LocalBranches = new ObservableCollection<BranchModel>(branchModelCollection);
 
-            var defaultBranch = repository.LocalBranches.First();
-            var currentBranchCommitsCollection = defaultBranch.Commits.Select(x => new CommitModel { Message = x.Message });
+            var remoteBranchModelCollection = repository
+                .Branches
+                .Where(x => x.IsRemote)
+                .Select(x => new BranchModel { Name = x.Name });
+            RemoteBranches = new ObservableCollection<BranchModel>(remoteBranchModelCollection);
+
+            var defaultBranch = repository.Branches.First();
+            var currentBranchCommitsCollection = defaultBranch.Commits.Select(x => 
+                new CommitModel 
+                {
+                    Sha = x.Sha,
+                    Message = x.Message,
+                    Author = new SignatureModel { Name = x.Author.Name, When = x.Author.When } 
+                });
             CurrentBranchCommits = new ObservableCollection<CommitModel>(currentBranchCommitsCollection);
+
+            SelectedCommit = CurrentBranchCommits.First();
         }
     }
 }

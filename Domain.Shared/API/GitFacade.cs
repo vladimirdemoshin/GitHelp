@@ -17,11 +17,22 @@ namespace Domain.Shared.API
                     var commits = new List<Commit>();
                     foreach (var commit in branch.Commits)
                     {
-                        var commitModel = new Commit(commit.Message);
+                        var commitModel = new Commit
+                        {
+                            Sha = commit.Sha,
+                            Message = commit.Message,
+                            Author = _mapSignature(commit.Author),
+                            Committer = _mapSignature(commit.Committer)
+                        };
                         commits.Add(commitModel);
                     }
 
-                    var branchModel = new Branch(branch.FriendlyName, commits);
+                    var branchModel = new Branch 
+                    {
+                        Name = branch.FriendlyName,
+                        Commits = commits,
+                        IsRemote = branch.IsRemote
+                    };
                     localBranches.Add(branchModel);
                 }
 
@@ -29,6 +40,22 @@ namespace Domain.Shared.API
 
                 return repository;
             } 
+        }
+
+
+        public Signature _mapSignature(LibGit2Sharp.Signature signature)
+        {
+            if (signature == null)
+            {
+                return null;
+            }
+
+            var signatureModel = new Signature
+            {
+                Name = signature.Name,
+                When = signature.When,
+            };
+            return signatureModel;
         }
     }
 }
