@@ -45,7 +45,7 @@ namespace Desktop.ViewModels
                 });
             CurrentBranchCommits = new ObservableCollection<CommitModel>(currentBranchCommitsCollection);
 
-            SelectedCommit = CurrentBranchCommits.First();
+            SelectedCommit = CurrentBranchCommits[3];
         }
     }
 }
